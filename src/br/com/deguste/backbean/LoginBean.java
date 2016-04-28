@@ -6,6 +6,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.omnifaces.cdi.ViewScoped;
 
 import br.com.deguste.model.entity.Usuario;
 import br.com.deguste.util.FacesUtil;
@@ -13,9 +16,8 @@ import br.com.deguste.util.NavigationUtil;
 import br.com.deguste.util.SessionControl;
 
 
-//@Named
-@ManagedBean
-@javax.faces.bean.ViewScoped
+@Named
+@ViewScoped
 public class LoginBean implements Serializable {
 
 	
@@ -37,7 +39,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public void logar() {
-
+		
 		usuario = session.login(usuario.getLogin(), usuario.getSenha());
 
 	}
@@ -58,13 +60,6 @@ public String paginaRed(){
 	}
 	
 }
-	public void redirecionaConsulta(){
-		FacesUtil.redirectTo("consultaGeral");
-	}
-	
-	public void redirecionaEstatisticas(){
-		FacesUtil.redirectTo("dadosEstatisticos");
-	}
 	private void verificaAcesso() {
 		/*if (usuario.isPrimeiroAcesso())
 			NavigationUtil.toPrimeiroAcesso();
@@ -80,11 +75,6 @@ public String paginaRed(){
 
 	public Usuario getUsuarioLogado() {
 		return session.getUsuarioSession();
-	}
-	
-	public void voltarLogin() {
-		FacesUtil.redirectTo("login");
-
 	}
 
 	public Usuario getUsuario() {

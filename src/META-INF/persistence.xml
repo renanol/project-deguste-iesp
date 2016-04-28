@@ -8,8 +8,8 @@
 			<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
 			<class>br.com.deguste.model.entity.Usuario</class>
-			<class>br.com.deguste.model.entity.Funcionario</class>
-			<class>br.com.deguste.model.entity.HorarioFuncionario</class> 
+			<class>br.com.deguste.model.entity.Funcionario</class> 
+			<class>br.com.deguste.model.entity.Fornecedor</class> 
 			
 			<properties>
 

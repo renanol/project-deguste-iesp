@@ -37,32 +37,33 @@ public class Funcionario  implements Serializable {
 	@Column(nullable=false, length = 14)
 	private String cpf;
 	
-	@Column(nullable=false, length = 35)
-	private String matricula;
+	@Column(nullable=false, length = 8)
+	private String rg;
+	
+	@Column(nullable=false, length = 6)
+	private String orgaoExpeditor;
 	
 	@Column
 	private String telefone;
 	
 	@Column
 	private String email;
+
+	//CRIAR DEPOIS UMA CLASSE ENDEREÇO E APONTAR O POJO PRA ELA, PEGUIÇA NÃO DEIXOU EU TERMINAR ISSO
 	
-	@Column
-	private String endereco;
-	
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_horario", referencedColumnName = "id")
-	private HorarioFuncionario horario;
-	
+//	@Column
+//	private String endereco;
+		
 	
 	@Column
 	private String tipoFoto;
 	
-	@Column
-	private Integer turnos;
-	
+
 	@Column
 	private boolean ativo;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataCadastro;
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -105,13 +106,21 @@ public class Funcionario  implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf.replaceAll("\\.","").replaceAll("\\/","").replace("-","");
 	}
-
-	public String getMatricula() {
-		return matricula;
+	
+	public String getRg() {
+		return rg;
 	}
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula.replaceAll("\\.","").replaceAll("\\/","").replace("-","");
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getOrgaoExpeditor() {
+		return orgaoExpeditor;
+	}
+
+	public void setOrgaoExpeditor(String orgaoExpeditor) {
+		this.orgaoExpeditor = orgaoExpeditor;
 	}
 
 	public boolean isAtivo() {
@@ -139,13 +148,13 @@ public class Funcionario  implements Serializable {
 		this.email = email;
 	}
 
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
+//	public String getEndereco() {
+//		return endereco;
+//	}
+//
+//	public void setEndereco(String endereco) {
+//		this.endereco = endereco;
+//	}
 
 
 	public String getTipoFoto() {
@@ -156,21 +165,15 @@ public class Funcionario  implements Serializable {
 		this.tipoFoto = tipoFoto;
 	}
 
-	public Integer getTurnos() {
-		return turnos;
+	public Date getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setTurnos(Integer turnos) {
-		this.turnos = turnos;
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public HorarioFuncionario getHorario() {
-		return horario;
-	}
-
-	public void setHorario(HorarioFuncionario horario) {
-		this.horario = horario;
-	}
+	
 
 	
 	

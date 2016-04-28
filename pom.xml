@@ -87,40 +87,12 @@
 			<version>1.7.7</version>
 		</dependency>
 
-
-
 		<!-- POSTGRES -->
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901.jdbc4</version>
 		</dependency>
-
-		<!-- IREPORT -->
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>5.5.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.2.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>2.6.12</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
 
 		<!-- JSF 2 -->
 		<dependency>
@@ -186,39 +158,42 @@
 			<artifactId>metadata-extractor</artifactId>
 			<version>2.4.0-beta-1</version>
 		</dependency>
-		
-					<!-- BOOTSFACES 0.6.6 -->
-        <dependency>
-            <groupId>net.bootsfaces</groupId>
-            <artifactId>bootsfaces</artifactId>
-            <version>0.6.6</version>
-            <scope>compile</scope>
-        </dependency>
 
-        <!-- PRIMEFACES 5.1 -->
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>5.1</version>
-            <scope>compile</scope>
-        </dependency>
+		<!-- BOOTSFACES 0.6.6 -->
+		<dependency>
+			<groupId>net.bootsfaces</groupId>
+			<artifactId>bootsfaces</artifactId>
+			<version>0.6.6</version>
+			<scope>compile</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>1.0.10</version>
-        </dependency>
+		<!-- PRIMEFACES 5.1 -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.1</version>
+			<scope>compile</scope>
+		</dependency>
 
-<!-- 		JODA TIME	 -->
-	<dependency>
-		<groupId>joda-time</groupId>
-		<artifactId>joda-time</artifactId>
-		<version>2.9.1</version>
-	</dependency>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>1.0.10</version>
+		</dependency>
 
+		<!-- JODA TIME -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.1</version>
+		</dependency>
 
-
-
+		<!-- GOOGLE GSON API -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+		</dependency>
 
 	</dependencies>
 

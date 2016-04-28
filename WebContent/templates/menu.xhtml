@@ -6,51 +6,43 @@
 	xmlns:b="http://bootsfaces.net/ui" 
 	xmlns:p="http://primefaces.org/ui">
 
-<h:form styleClass="navbar-form navbar-right"
-		acceptcharset="ISO-8859-1">
 
-		<b:navBar  brandHref="#{request.contextPath}/login.jsf"
-			inverse="true" fixed="top" >
+	<h:form >
+		<div>
 
-			<b:navbarLinks >
-				<b:dropMenu id="cadastrosMenu" value="Cadastros"
+
+			<b:navBar  inverse="true">
+				<b:navbarLinks pull="left" >
+				<b:navbarLinks id="menuBoot">
+					<b:dropMenu id="cadastrosMenu" value="Cadastros"
 						iconAwesome="birthday-cake">
-						<b:navLink value="Usuários" href="#{administradorBean.inputUrl('usuario.xhtml')}"></b:navLink>
-						<b:navLink value="Funcionários" href="/pages/funcionarios.jsf"></b:navLink>
+						<b:navLink value="Usuários" href="usuario.xhtml"></b:navLink> 
+						<b:navLink value="Fornecedores" href="fornecedor.xhtml"></b:navLink> 
+						<b:navLink value="Funcionários" href="funcionario.xhtml"></b:navLink> 
 					</b:dropMenu>
-			</b:navbarLinks>
-			
-			<b:navbarLinks pull="right">
+				</b:navbarLinks>
+				</b:navbarLinks>
+				<b:navbarLinks pull="right" styleClass="hidden-xs">
+					<b:dropMenu value="#{sessionBean.nomeUsuarioLogado()}" rendered="#{sessionBean.loggedIn()}">
+						<h:panelGrid columns="1">
+							<h:panelGrid>
+								<b:commandButton value="Último Acesso" look="link"
+									actionListener="#{sessionBean.logout()}" />
+							</h:panelGrid>
+							<h:panelGrid>
+								<b:commandButton value="Alterar Senha" look="link" />
+							</h:panelGrid>
+							<h:panelGrid>	
+								<b:commandButton value="Sair" look="link"
+									actionListener="#{sessionBean.logout()}" />
+							</h:panelGrid>
+						</h:panelGrid>	
+					</b:dropMenu>
+				</b:navbarLinks>
+			</b:navBar>
 
-			<div class="form-group" id="satanas">
-				<b:inputText placeholder="Login"
-					rendered="#{!sessionBean.loggedIn()}" fieldSize="sm"
-					value="#{loginBean.usuario.login}"
-					style="margin-top:10px !important" />
-			</div>
-			<div class="form-group">
-				<p:password placeholder="Senha"
-					rendered="#{!sessionBean.loggedIn()}" fieldSize="sm"
-					value="#{loginBean.usuario.senha}"
-					style="height:30px !important; margin-top:10px !important;" />
-			</div> 
-                #{' '}
-                <b:commandButton action="a"
-				rendered="#{!sessionBean.loggedIn()}" value="Login" look="success"
-				actionListener="#{loginBean.logar()}"
-				style="margin-top:7px !important" iconAlign="right" />
-			
-		
-			  <b:dropMenu rendered="#{sessionBean.loggedIn()}" value="#{sessionBean.nomeUsuarioLogado()}">
-       		 	<b:commandButton look="link" value="Logout" actionListener="#{sessionBean.logout()}"   />
-       		 </b:dropMenu>
-		
-			</b:navbarLinks>
-			
-		
-		</b:navBar>
-			
-			
+
+		</div>
 	</h:form>
 
 

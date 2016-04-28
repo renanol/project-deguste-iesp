@@ -29,7 +29,7 @@ public class FuncionarioBO extends GenericHibernateDAO<Funcionario> implements F
 	@Override
 	public Funcionario salvar(Funcionario funcionario) throws Exception{
 		if(funcionario.getId() == null){
-			this.verificaMatricula(funcionario);
+			this.verificaFuncionario(funcionario);
 			super.create(funcionario);
 		}
 		else
@@ -40,10 +40,11 @@ public class FuncionarioBO extends GenericHibernateDAO<Funcionario> implements F
 	
 	
 	@Override
-	public void verificaMatricula(Funcionario funcionario) throws Exception{
+	public void verificaFuncionario(Funcionario funcionario) throws Exception{
 		try{
-			Query queryFuc = em.createQuery("SELECT f FROM Funcionario f WHERE f.matricula =:matricula AND f.ativo =:ativo");
-			queryFuc.setParameter("matricula", funcionario.getMatricula());
+			Query queryFuc = em.createQuery("SELECT f FROM Funcionario f WHERE f.cpf =:cpf AND f.rg =:rg AND f.ativo =:ativo");
+			queryFuc.setParameter("cpf", funcionario.getCpf());
+			queryFuc.setParameter("rg", funcionario.getRg());
 			queryFuc.setParameter("ativo", true);
 			Number matriculas = (Number) queryFuc.getSingleResult();
 			
@@ -54,7 +55,7 @@ public class FuncionarioBO extends GenericHibernateDAO<Funcionario> implements F
 			return;
 		} catch (Exception e) {
 			throw new Exception(
-					"Essa matrícula pertence a outro funcionário");
+					"Esse funcionário já foi cadastrado!");
 		}
 		
 	}
@@ -89,9 +90,9 @@ public class FuncionarioBO extends GenericHibernateDAO<Funcionario> implements F
 			paramentros.put("nome", "%"+funcionario.getNome()+"%");
 		}
 		
-		if(funcionario.getMatricula() != null && !funcionario.getMatricula().isEmpty()){
-			query.append(" AND f.matricula =:matricula");
-			paramentros.put("matricula", funcionario.getMatricula());
+		if(funcionario.getRg() != null && !funcionario.getRg().isEmpty()){
+			query.append(" AND f.rg =:rg");
+			paramentros.put("rg", funcionario.getRg());
 		}
 		
 		if(funcionario.getCpf() != null && !funcionario.getCpf().isEmpty()){

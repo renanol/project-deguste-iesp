@@ -30,8 +30,7 @@ public class Util {
 	public static String getPastaFotos(){
 		StringBuffer caminho = new StringBuffer();
 //		caminho.append(System.getProperty("catalina.base"));
-		caminho.append("C:/Biometria_Imagens");
-//		caminho.append("C:/farma_imagens");
+		caminho.append("C:/Deguste_Imagens");
 		
 		// /data/content/farma/Farmacias/fotos
 		caminho.append(File.separator);

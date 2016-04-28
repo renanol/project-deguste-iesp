@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,8 +18,7 @@ import br.com.deguste.util.SessionControl;
 
 
 @Named
-@ManagedBean
-@javax.faces.bean.SessionScoped
+@SessionScoped
 public class SessionBean implements Serializable {
 	
 
@@ -28,11 +28,15 @@ public class SessionBean implements Serializable {
 	
 	private String ip;
 	
+	public SessionBean(){
+		this.pegarIP();
+	}
+	
+	
+	
 	@PostConstruct
 	public void init(){
-			FacesContext fc = FacesContext.getCurrentInstance();  
-		    HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();  
-		    ip = (request.getRemoteAddr());
+		
 	}
 	
 	public String nomeUsuarioLogado(){
@@ -45,6 +49,13 @@ public class SessionBean implements Serializable {
 
 	public Usuario login(String login, String senha){
 		return getSession().login(login, senha);
+	}
+	
+	public void pegarIP(){
+		FacesContext fc = FacesContext.getCurrentInstance();  
+	    HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();  
+	    this.ip = (request.getRemoteAddr());
+		
 	}
 	
 	public void logout() throws IOException {

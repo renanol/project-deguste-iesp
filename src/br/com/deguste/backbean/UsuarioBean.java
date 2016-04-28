@@ -33,7 +33,7 @@ import br.com.deguste.util.SessionControl;
 
 @Named
 @ManagedBean
-@javax.faces.bean.ViewScoped
+@org.omnifaces.cdi.ViewScoped
 public class UsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 2656864881305209232L;
@@ -84,17 +84,9 @@ public class UsuarioBean implements Serializable {
 		this.procurarUsuario();
 	}
 
-	public void botaoUsuario(){
-		FacesUtil.redirectTo("cadastroUsuarios");
-	}
 
 	public UsuarioBO getUsuarioBO() {
 		return usuarioBO;
-	}
-	
-	public void cancelarUsuario(){
-		usuario = new Usuario();
-		FacesUtil.redirectTo("consultaUsuario");
 	}
 	
 
@@ -225,7 +217,6 @@ public class UsuarioBean implements Serializable {
 		
 		}
 		
-		FacesUtil.redirectTo("consultaUsuario");
 	}
 	
 
@@ -307,9 +298,9 @@ public class UsuarioBean implements Serializable {
 	public void procurarUsuario(){
 		this.listaUsuarios = usuarioBO.procurarUsuario(this.usuario);
 		if(listaUsuarios == null || listaUsuarios.isEmpty()){
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"O usuário não foi encontrado.", ""));
+//			FacesContext.getCurrentInstance().addMessage(null,
+//					new FacesMessage(FacesMessage.SEVERITY_WARN,
+//							"O usuário não foi encontrado.", ""));
 		}
 	}
 	

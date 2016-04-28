@@ -66,6 +66,7 @@ public class AdministradorBean {
 		this.url = "/pages/" + url;
 		return "/pages/common/index.xhtml";
 	}
+	
 
 	public String capturarIpLocal() throws UnknownHostException{
 		return "";
