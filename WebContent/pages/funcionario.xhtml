@@ -9,7 +9,7 @@
 	<ui:define name="body">
 	
 		
-		<script type="text/javascript">
+<script type="text/javascript">
 	$("#related_image .start").hide();
 </script>
 		<style>
@@ -264,6 +264,25 @@
 								</f:facet>
 								<h:outputText value="#{funcionario.telefone}" />
 							</p:column>
+							
+							<p:column headerText="Info" style="width:25px;text-align: center"
+								width="5%">
+								<p:commandButton icon="ui-icon-search" update=":infocategoria"
+									oncomplete="PF('infoDialog').show()" process="@this">
+									<f:setPropertyActionListener value="#{funcionario}"
+										target="#{funcionarioBean.funcionario}" />
+								</p:commandButton>
+							</p:column>
+
+							<p:column width="90" style="text-align: center;"
+								headerText="Alterar">
+								<p:commandButton icon="ui-icon-wrench" ajax="true"
+									action="#{funcionarioBean.acaoAlterar(funcionario)}"
+									update=":funcionario" />
+
+							</p:column>
+
+							
 
 						</p:dataTable>
 					</p:panel>
@@ -273,6 +292,21 @@
 	</p:outputPanel>	
 		
 	
+	<p:dialog widgetVar="infoDialog" modal="true" resizable="false"
+		styleClass="headerPainel" width="600px" height="200px"
+		header="Informações">
+		<h:panelGroup id="infocategoria">
+			<h:form acceptcharset="ISO-8859-1" id="formInfocategoria">
+
+				<h:panelGrid>
+					<h:panelGrid>
+						<p:outputLabel value="#{funcionarioBean.funcionario.nome}" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+			</h:form>
+		</h:panelGroup>
+	</p:dialog>
 	</ui:define>
 </ui:composition>	
 	</html>

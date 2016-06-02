@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.context.FacesContext;	
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.swing.ImageIcon;
@@ -40,62 +40,62 @@ public class FuncionarioBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2710225901918052936L;
-	
-	
+
+
 	private Funcionario funcionario;
-	
+
 	@Inject
 	private FuncionarioBO funcionarioBO;
-	
+
 	@Inject
 	private EnderecoBO enderecoBO; 
-	
+
 	private List<Funcionario> listaFuncionarios;
-	
+
 	//Rendereds da pagina
-	
+
 	private boolean statusRegister;
 	private boolean cadastroRendered;
 	private boolean pesquisaRendered;
 	private boolean botaoFecharRendered; 
 	private boolean botaoApagarRendered;
-	
-	
+
+
 	private UploadedFile file;
 	private String loteImagem;
 	private InputStream inputStream;
 	private StreamedContent uploadedFileAsStream;
-	
+
 	public FuncionarioBean(){
 		this.botaoApagarRendered = false;
 		this.setCadastroRendered(false);
 		this.setPesquisaRendered(true);
 	}
-	
+
 	public void limpar(){
 		this.funcionario = new Funcionario();
 		this.statusRegister = true;
 		this.botaoApagarRendered = false;
 	}
 
-	
-	
+
+
 	@PostConstruct
 	public void init() throws Exception{
 		if(funcionario == null){
 			funcionario = new Funcionario();
 		}
-		
+
 		this.procurarFuncionario();
-		
-		
+
+
 	}
-	
+
 	public void acaoPesquisar(){
 		this.limpaBean();
 		this.alterStatusRendered();
 	}
-	
+
 	public void alterStatusRendered() {
 		if (cadastroRendered) {
 			setCadastroRendered(false);
@@ -105,7 +105,7 @@ public class FuncionarioBean implements Serializable {
 			setPesquisaRendered(false);
 		}
 	}
-	
+
 	public void acaoCadastrar(){
 		this.funcionario = new Funcionario();
 		if(statusRegister == false){
@@ -113,66 +113,67 @@ public class FuncionarioBean implements Serializable {
 		}
 		this.alterStatusRendered();
 	}
-	
-	
-	public void acaoAlterar() throws NoSuchFieldException, SecurityException,
-	InstantiationException, IllegalAccessException {
-if (this.funcionario.getId() == null) {
-	FacesContext.getCurrentInstance().addMessage(null,
-			new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"O funcionario não foi selecionado.", ""));
-} else {
-	this.setStatusRegister(false);
-	botaoApagarRendered = true;
-	setCadastroRendered(true);
-	setPesquisaRendered(false);
-}
-}
-	
+
+
+	public void acaoAlterar(Funcionario funcionario) throws NoSuchFieldException, SecurityException,
+		InstantiationException, IllegalAccessException {
+		this.funcionario = funcionario;
+		if (this.funcionario.getId() == null) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"O funcionario nï¿½o foi selecionado.", ""));
+		} else {
+			this.setStatusRegister(false);
+			botaoApagarRendered = true;
+			setCadastroRendered(true);
+			setPesquisaRendered(false);
+		}
+	}
+
 	public void selecionarObjetoEvent(SelectEvent event) {
 		this.funcionario = (Funcionario) event.getObject();
-		
-		}
-	
-	
+
+	}
+
+
 	public void limpaBean(){
 		funcionario = new Funcionario();
 		listaFuncionarios = new ArrayList<Funcionario>();
 	}
-	
-	
+
+
 	public void procurarFuncionario() throws Exception{
 		this.listaFuncionarios = funcionarioBO.consultaFuncionario(funcionario);
 	}
-	
-//	public void obterEnderecoPorCep(){
-//		try{
-//			if(funcionario != null && funcionario.getCep() != null && !funcionario.getCep().isEmpty()){
-//				EnderecoResponse endereco = enderecoBO.obterEnderecoPorCep(funcionario.getCep());
-//				if(endereco != null){
-//
-//					funcionario.setCep(endereco.getCep());
-//					funcionario.setTipoLogradouro(endereco.getTipoDeLogradouro());
-//					funcionario.setLogradouro(endereco.getLogradouro());
-//					funcionario.setBairro(endereco.getBairro());
-//					funcionario.setCidade(endereco.getCidade());
-//					funcionario.setEstado(endereco.getEstado());
-//
-//					if(endereco.getLogradouro() == null){
-//						funcionario.setCep(null);
-//						funcionario.setNumeroLogradouro(null);
-//						throw new Exception("Endereço não encontrado.");
-//					}
-//				}
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			FacesContext ctx = FacesContext.getCurrentInstance();
-//			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-//		}
-//	}
-	
-	
+
+	//	public void obterEnderecoPorCep(){
+	//		try{
+	//			if(funcionario != null && funcionario.getCep() != null && !funcionario.getCep().isEmpty()){
+	//				EnderecoResponse endereco = enderecoBO.obterEnderecoPorCep(funcionario.getCep());
+	//				if(endereco != null){
+	//
+	//					funcionario.setCep(endereco.getCep());
+	//					funcionario.setTipoLogradouro(endereco.getTipoDeLogradouro());
+	//					funcionario.setLogradouro(endereco.getLogradouro());
+	//					funcionario.setBairro(endereco.getBairro());
+	//					funcionario.setCidade(endereco.getCidade());
+	//					funcionario.setEstado(endereco.getEstado());
+	//
+	//					if(endereco.getLogradouro() == null){
+	//						funcionario.setCep(null);
+	//						funcionario.setNumeroLogradouro(null);
+	//						throw new Exception("Endereï¿½o nï¿½o encontrado.");
+	//					}
+	//				}
+	//			}
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//			FacesContext ctx = FacesContext.getCurrentInstance();
+	//			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+	//		}
+	//	}
+
+
 	public void cadastrofuncionario() {
 		Calendar dataCadastro = new GregorianCalendar();
 		try {
@@ -180,7 +181,7 @@ if (this.funcionario.getId() == null) {
 				funcionario.setDataCadastro(dataCadastro.getTime());
 				funcionario.setAtivo(true);
 			}
-			
+
 			funcionarioBO.salvar(funcionario);
 			this.upload(funcionario);
 			this.limpaBean();
@@ -190,7 +191,7 @@ if (this.funcionario.getId() == null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
-	
+
 	private void upload(Funcionario funcionario) {
 
 		if (file != null) {
@@ -236,18 +237,18 @@ if (this.funcionario.getId() == null) {
 			}
 		}
 	}
-	
+
 	public void uploadFile(FileUploadEvent event) throws IOException {
 		file = event.getFile();
 		inputStream = file.getInputstream();
 	}
-	
+
 	public boolean existeImagem() throws IOException {
 		String folder_file = Util.getPastaFotos() + File.separator + this.funcionario.getId() + File.separator + ModuloImage.FUNCIONARIO.toString() + "." + this.funcionario.getTipoFoto();
 		File foto = new File(folder_file);
 		return foto.exists();
 	}
-	
+
 	private void redimencionaImagem(String caminho) {
 		Image imagem = null;
 
@@ -373,10 +374,10 @@ if (this.funcionario.getId() == null) {
 	public void setUploadedFileAsStream(StreamedContent uploadedFileAsStream) {
 		this.uploadedFileAsStream = uploadedFileAsStream;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 
 }

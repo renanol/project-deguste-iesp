@@ -6,18 +6,18 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/templates/common.xhtml">
+
 	<ui:define name="body">
 
 		<p:outputPanel id="categoria">
-			<h:panelGroup rendered="#{categoriaBean.cadastroRendered}"
-				id="panelCadastrocategoria">
+			<h:panelGroup rendered="#{categoriaBean.cadastroRendered}" id="panelCadastrocategoria">
 
 				<p:panel header="#{msg['categoria.register']}">
 					<h:form id="formCadastrocategoria"
 						rendered="#{categoriaBean.cadastroRendered}">
 
-						<p:toolbar id="tbcategoriaCadastrar" acceptcharset="ISO-8859-1">
-							<f:facet name="left">
+						<p:toolbar id="tbcategoriaCadastrar" acceptcharset="ISO-8859-1" >
+							<f:facet name="left" >
 								<p:commandButton value="#{msg['msg.comum.botao.salvar']}"
 									ajax="true"
 									actionListener="#{categoriaBean.cadastrocategoria()}"
@@ -34,9 +34,10 @@
 									actionListener="#{categoriaBean.limpar()}" />
 
 							</f:facet>
+							
 						</p:toolbar>
 
-						<p:spacer style="width:100%; height:20px" />
+						
 
 						<p:panel>
 							<p:messages id="msgCadastrocategoria" closable="true" />
@@ -47,7 +48,7 @@
 											for="nomecategoria" />
 										<p:inputText id="nomecategoria" style="width:480px;"
 											required="true" value="#{categoriaBean.categoria.nome}"
-											requiredMessage="O nome do categoria é obrigatório" />
+											requiredMessage="O nome do categoria é obrigatório" maxlength="50" />
 									</h:panelGrid>
 								</h:panelGrid>
 
@@ -67,22 +68,8 @@
 					rendered="#{categoriaBean.pesquisaRendered}">
 					<p:defaultCommand target="findButton" />
 
-					<p:panel header="#{msg['categoria.search']}" style="width: 99.3%;">
-						<p:toolbar id="tbCargoPesquisar">
-							<f:facet name="left">
-								<p:commandButton value="#{msg['msg.comum.botao.novo']}"
-									ajax="true" immediate="true" icon="ui-icon-document">
-									<p:ajax event="click" update=":categoria"
-										listener="#{categoriaBean.acaoCadastrar()}" />
-								</p:commandButton>
-								<p:commandButton value="#{msg['msg.comum.botao.limpar']}"
-									ajax="true" icon="ui-icon-cancel">
-									<p:ajax event="click" listener="#{categoriaBean.limpaBean()}"
-										update=":panelPesquisacategoria" />
-								</p:commandButton>
-							</f:facet>
-						</p:toolbar>
-						<p:separator style="width:100%;height:5px;" />
+					<p:panel header="#{msg['categoria.search']}" style="width: 99.3%; ">						
+
 						<h:panelGrid>
 							<h:panelGrid>
 								<h:panelGrid columns="2">
@@ -112,7 +99,6 @@
 							</f:facet>
 							<p:messages id="msgPesquisacategoria" closable="true" />
 						</h:panelGrid>
-						<p:separator style="width:100%;height:5px;" />
 
 						<br />
 
@@ -168,6 +154,25 @@
 							</p:column>
 
 						</p:dataTable>
+
+						<p:spacer style="width:100%; height:10px" />
+						
+						<p:toolbar id="tbCargoPesquisar">
+						
+							<f:facet name="left">							
+								<p:commandButton value="#{msg['msg.comum.botao.novo']}"
+									ajax="true" immediate="true" icon="ui-icon-document">
+									<p:ajax event="click" update=":categoria"
+										listener="#{categoriaBean.acaoCadastrar()}" />
+								</p:commandButton>
+								<p:commandButton value="#{msg['msg.comum.botao.limpar']}"
+									ajax="true" icon="ui-icon-cancel">
+									<p:ajax event="click" listener="#{categoriaBean.limpaBean()}"
+										update=":panelPesquisacategoria" />
+								</p:commandButton>
+							</f:facet>							
+						</p:toolbar>
+						
 					</p:panel>
 
 				</h:form>
@@ -175,7 +180,7 @@
 		</p:outputPanel>
 
 		<p:dialog widgetVar="infoDialog" modal="true" resizable="false"
-			styleClass="headerPainel" width="600px" height="650px"
+			styleClass="headerPainel" width="600px" height="200px"
 			header="Informações">
 			<h:panelGroup id="infocategoria">
 				<h:form acceptcharset="ISO-8859-1" id="formInfocategoria">
