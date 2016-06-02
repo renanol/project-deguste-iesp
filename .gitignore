@@ -1,3 +1,84 @@
+<<<<<<< HEAD
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+/target/
+=======
 #created by https://www.gitignore.io/api/eclipse,java
 
 ### Eclipse ###
@@ -79,3 +160,4 @@ buildNumber.properties
 .mvn/timing.properties
 
 
+>>>>>>> bafbdf018ef0117e4c6395b601a35fc901b6f766

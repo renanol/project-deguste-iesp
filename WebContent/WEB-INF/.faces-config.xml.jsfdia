@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <PROCESS model-entity="JSFProcess"/>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess"/>
+>>>>>>> bafbdf018ef0117e4c6395b601a35fc901b6f766
