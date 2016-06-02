@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/common.xhtml">
+	<ui:define name="body">
+
+		<p:outputPanel id="venda">
+			<h:panelGroup rendered="#{vendaBean.cadastroRendered}"
+				id="panelCadastrovenda">
+
+				<p:panel header="#{msg['venda.register']}">
+					<h:form id="formCadastrovenda"
+						rendered="#{vendaBean.cadastroRendered}">
+
+						<p:toolbar id="tbvendaCadastrar" acceptcharset="ISO-8859-1">
+							<f:facet name="left">
+								<p:commandButton value="#{msg['msg.comum.botao.pesquisar']}"
+									ajax="true" immediate="true" icon="ui-icon-search"
+									action="#{vendaBean.acaoPesquisar()}" update=":venda">
+									<p:ajax event="click" />
+								</p:commandButton>
+								<p:commandButton value="#{msg['msg.comum.botao.novo']}"
+									icon="ui-icon-document" ajax="true" process="@this"
+									update=":panelCadastrovenda"
+									actionListener="#{vendaBean.limpar()}" />
+
+							</f:facet>
+						</p:toolbar>
+
+						<p:spacer style="width:100%; height:20px" />
+
+						<p:panel>
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:panel>
+			<h:panelGrid columns="3">
+						<h:panelGrid>
+							<p:autoComplete id="codigoDoProduto" value="#{vendaBean.produtoSelecionado}" placeholder="CÓDIGO OU NOME DO PRODUTO" 
+							completeMethod="#{vendaBean.completeProduto}"  size="80" style="font-weight:bold !important;" required="true" requiredMessage="Infome o produto"
+                        		var="produto" itemLabel="#{produto.codigo}#{produto != null ? '' : ''}#{produto.nome}" itemValue="#{produto}" converter="entityConverter" forceSelection="true" />
+						</h:panelGrid>
+					
+						
+						<h:panelGrid>
+						<p:inputText id="quantidade"
+								placeholder="Quantidade" value="#{vendaBean.pedido.quantidade}" required="true" requiredMessage="Informe a quantidade"
+								style="font-size:16px !important; font-weight: bold; width:90px; height:18px;" maxlength="5">
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid>
+						<p:commandButton icon="ui-icon-circle-plus" style="margin-left:25px;" ajax="false" 
+						actionListener="#{vendaBean.addProduto()}" update="dtVendas" />
+						</h:panelGrid>
+					</h:panelGrid>
+					
+					<p:spacer width="100%" height="5px"/>
+				<h:panelGrid columns="1">
+					<h:panelGrid>
+					 <p:inplace id="event" label="Adicionar um Cliente" style="font-size:12px !important; margin-left:30px; font-weight: bold !important; color:#168dd9 !important" 
+					 			effectSpeed="fast">
+           				 	<p:selectOneMenu id="unidade" converter="entityConverter" value="#{vendaBean.cliente}" style="width:285px;">
+								<f:selectItems value="#{vendaBean.listaClientesItem()}" />
+       					</p:selectOneMenu>	
+       				 </p:inplace>
+					</h:panelGrid>
+				</h:panelGrid>	
+			</p:panel>
+				<p:spacer height="10px;"/>
+			
+			<p:dataTable id="dtVendas" emptyMessage="Nenhum produto foi adicionado a venda" var="pedido" value="#{vendaBean.carrinho}">
+				
+				<p:column headerText="codigo"  style="text-align: center">
+						<h:outputText value="#{pedido.produto.codigo}" style="font-size:12px !important; font-weight: bold;" />			
+				</p:column>			
+				
+				<p:column headerText="Produto" width="47%" style="text-align: center">
+						<h:outputText value="#{pedido.produto.nome}" style="font-size:16px !important; font-weight: bold;"/>
+				</p:column>
+				
+				<p:column headerText="Quantidade" style="text-align: center">
+					<h:outputText value="#{pedido.quantidade}" style="font-size:16px !important; font-weight: bold;"/>
+				</p:column>
+				
+				<p:column headerText="Valor Unitario"  style="text-align: center " >
+						<h:outputText value="#{produto.preco}" style="font-size:16px !important; font-weight: bold;" />
+				</p:column>
+				
+					<p:column headerText="Valor Total"  style="text-align: center " >
+						<h:outputText value="#{produto.preco}" style="font-size:16px !important; font-weight: bold;" />
+				</p:column>
+				
+				<p:column width="60" headerText="Remover" style="text-align: center">
+						<p:commandButton id="remover" icon="ui-icon-circle-close"  ajax="false" actionListener="#{vendaBean.removerPedido(pedido)}">
+						</p:commandButton>
+					</p:column>
+			</p:dataTable>
+
+				<p:spacer height="10px" />
+				<p:panel>
+					<h:panelGrid >
+					<h:panelGrid>
+					<p:outputLabel  for="total" style="font-size:14px !important; font-weight: bold !important" 
+								value="Total da Venda:" />
+					<p:outputLabel id="total" value="#{vendaBean.totalCarrinho}"
+						style="font-size:16px  !important; font-weight: bold !important; margin-left: 10px;">
+						<f:convertNumber />
+					</p:outputLabel>
+					</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+					<p:spacer height="10px" />
+				
+							<p:toolbar id="tbVendaCadastrar" acceptcharset="ISO-8859-1">
+							<f:facet name="left">
+								<p:commandButton value="Finalizar Venda"
+									ajax="true"
+									actionListener="#{vendaBean.cadastroVendas()}"
+									icon="ui-icon-check" update="formCadastrovenda" />
+
+							</f:facet>
+						</p:toolbar>
+
+
+						</p:panel>
+
+
+
+					</h:form>
+				</p:panel>
+			</h:panelGroup>
+
+
+			<h:panelGroup id="panelPesquisavenda"
+				rendered="#{vendaBean.pesquisaRendered}">
+				<h:form id="formPesquisavenda"
+					rendered="#{vendaBean.pesquisaRendered}">
+					<p:defaultCommand target="findButton" />
+
+					<p:panel header="#{msg['venda.search']}" style="width: 99.3%;">
+						<p:toolbar id="tbCargoPesquisar">
+							<f:facet name="left">
+								<p:commandButton value="#{msg['msg.comum.botao.novo']}"
+									ajax="true" immediate="true" icon="ui-icon-document">
+									<p:ajax event="click" update=":venda"
+										listener="#{vendaBean.acaoCadastrar()}" />
+								</p:commandButton>
+								<p:commandButton value="#{msg['msg.comum.botao.limpar']}"
+									ajax="true" icon="ui-icon-cancel">
+									<p:ajax event="click" listener="#{vendaBean.limpaBean()}"
+										update=":panelPesquisavenda" />
+								</p:commandButton>
+							</f:facet>
+						</p:toolbar>
+						<p:separator style="width:100%;height:5px;" />
+						<h:panelGrid>
+							<h:panelGrid>
+								<h:panelGrid columns="2">
+									<h:panelGrid>
+										<p:outputLabel value="Data da Venda"
+											for="vendaData" />
+										<p:calendar id="vendaData"
+											value="#{vendaBean.venda.dataVenda}"
+											style="width: 100px"  pattern="dd/MM/yyyy"/>
+									</h:panelGrid>
+								</h:panelGrid>
+							</h:panelGrid>
+
+							<p:spacer style="width:100%; height:10px" />
+
+							<f:facet name="footer">
+								<h:panelGrid columns="1">
+									<p:commandButton id="findButton"
+										value="#{msg['msg.comum.pesquisar']}" icon="ui-icon-search"
+										ajax="true"
+										actionListener="#{vendaBean.procurarVendas()}"
+										update="formPesquisavenda">
+									</p:commandButton>
+								</h:panelGrid>
+							</f:facet>
+							<p:messages id="msgPesquisavenda" closable="true" />
+						</h:panelGrid>
+						<p:separator style="width:100%;height:5px;" />
+
+						<br />
+
+						<p:dataTable id="vendas" var="venda"
+							value="#{vendaBean.listaVendas}"
+							rowKey="#{venda.id}" 
+							rendered="#{vendaBean.dtRender}" paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="10,20,30" scrollRows="10" scrollable="true"
+							scrollHeight="150" lazy="true" 
+							emptyMessage="Nenhum Registro Encontrado">
+
+
+							<p:column style="text-align: center;width:60px;">
+								<f:facet name="header">
+									<h:outputText value="#{msg['venda.id']}" />
+								</f:facet>
+								<h:outputText value="#{venda.id} ">
+								</h:outputText>
+							</p:column>
+
+							<p:column style="text-align: left;">
+								<f:facet name="header">
+									<h:outputText value="Cliente" />
+								</f:facet>
+								<h:outputText value="#{venda.cliente.nome}" />
+							</p:column>
+
+							<p:column style="text-align: center;">
+								<f:facet name="header">
+									<h:outputText value="Data da venda" />
+								</f:facet>
+								<h:outputText value="#{venda.dataVenda}" >
+								<f:convertDateTime  pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+
+							<p:column style="text-align: left;">
+								<f:facet name="header">
+									<h:outputText value="Usuário de sessão" />
+								</f:facet>
+								<h:outputText value="#{venda.usuario.nome}" />
+							</p:column>
+							
+								<p:column style="text-align: center; width:80px">
+								<f:facet name="header">
+									<h:outputText value="Valor" />
+								</f:facet>
+								<h:outputText value="#{venda.valorVenda}" />
+							</p:column>
+
+							<p:column headerText="Excluir"
+								style="width:25px;text-align: center" width="5%">
+								<p:commandButton icon="ui-icon-trash" ajax="false"
+									update="vendas"
+									actionListener="#{vendaBean.desabilitaVenda(venda)}">
+								</p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+					</p:panel>
+
+				</h:form>
+			</h:panelGroup>
+		</p:outputPanel>
+
+		<p:dialog widgetVar="infoDialog" modal="true" resizable="false"
+			styleClass="headerPainel" width="600px" height="650px"
+			header="Informações">
+			<h:panelGroup id="infovenda">
+				<h:form acceptcharset="ISO-8859-1" id="formInfovenda">
+
+					<h:panelGrid>
+						<h:panelGrid>
+						</h:panelGrid>
+					</h:panelGrid>
+
+				</h:form>
+			</h:panelGroup>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>
+</html>

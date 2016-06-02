@@ -18,11 +18,12 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.deguste.enumeration.PerfilAcesso;
+import br.com.deguste.model.bo.ClienteBO;
 import br.com.deguste.model.bo.FuncionarioBO;
 import br.com.deguste.model.bo.UsuarioBO;
+import br.com.deguste.model.entity.Cliente;
 import br.com.deguste.model.entity.Funcionario;
 import br.com.deguste.model.entity.Usuario;
-import br.com.deguste.util.FacesUtil;
 import br.com.deguste.util.NavigationUtil;
 import br.com.deguste.util.SHA;
 import br.com.deguste.util.SessionControl;
@@ -52,7 +53,7 @@ public class UsuarioBean implements Serializable {
 	
 	private boolean statusRegister;
 	
-	
+	private boolean dtRender;
 	private boolean cadastroRendered;
 	private boolean pesquisaRendered;
 	private boolean botaoFecharRendered; 
@@ -64,14 +65,17 @@ public class UsuarioBean implements Serializable {
 	
 	@Inject
 	private FuncionarioBO funcionarioBO;
-	
-	
 	private Funcionario funcionario;
+	
+	@Inject
+	private ClienteBO clienteBO;
+	private Cliente cliente;
 	
 	public UsuarioBean(){
 		this.botaoApagarRendered = false;
 		this.setCadastroRendered(false);
 		this.setPesquisaRendered(true);
+		this.dtRender = false;
 	}
 	
 	
@@ -81,7 +85,6 @@ public class UsuarioBean implements Serializable {
 		if(usuario == null){
 		this.usuario = new Usuario();
 		}	
-		this.procurarUsuario();
 	}
 
 
@@ -267,10 +270,15 @@ public class UsuarioBean implements Serializable {
 		this.alterStatusRendered();
 	}
 	
+	public void acaoPesquisar(){
+		this.limpaBean();
+		this.alterStatusRendered();
+		this.dtRender = false;
+	}
 	
 
 
-	public void desabilitaUsuario(){
+	public void desabilitaUsuario(Usuario usuario){
 		
 		try {
 			usuario.setAtivo(false);
@@ -282,6 +290,7 @@ public class UsuarioBean implements Serializable {
 		
 		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário foi excluído", null);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+		usuario = new Usuario();
 		this.listaUsuarios = usuarioBO.procurarUsuario(usuario);
 		
 	}
@@ -297,12 +306,10 @@ public class UsuarioBean implements Serializable {
 	
 	public void procurarUsuario(){
 		this.listaUsuarios = usuarioBO.procurarUsuario(this.usuario);
-		if(listaUsuarios == null || listaUsuarios.isEmpty()){
-//			FacesContext.getCurrentInstance().addMessage(null,
-//					new FacesMessage(FacesMessage.SEVERITY_WARN,
-//							"O usuário não foi encontrado.", ""));
-		}
+		this.dtRender = true;
 	}
+	
+	
 	
 	public void selecionarObjetoEvent(SelectEvent event) {
 		this.usuario = (Usuario) event.getObject();
@@ -310,13 +317,9 @@ public class UsuarioBean implements Serializable {
 		}
 	
 	
-	public void acaoAlterar() throws NoSuchFieldException, SecurityException,
-			InstantiationException, IllegalAccessException {
-		if (this.usuario.getId() == null) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"O usuário não foi selecionado.", ""));
-		} else {
+	public void acaoAlterar(Usuario usuario) {
+		this.usuario = usuario; 
+		if (this.usuario.getId() != null) {
 			this.setStatusRegister(false);
 			botaoApagarRendered = true;
 			setCadastroRendered(true);
@@ -329,12 +332,31 @@ public class UsuarioBean implements Serializable {
 		this.statusRegister = true;
 		this.botaoApagarRendered = false;
 	}
+	
+	public List<SelectItem>listaFuncionariosAtivos() throws Exception{
+		List<SelectItem> itens = new ArrayList<SelectItem>();
+		itens.add(new SelectItem(null, "Selecione"));
+		for(Funcionario func : funcionarioBO.getFuncionariosAtivos()){
+			itens.add(new SelectItem(func, func.getNome()));
+		}
+		return itens;
+	}
+	
+	public List<SelectItem>listaClientesAtivos() throws Exception{
+		List<SelectItem> itens = new ArrayList<SelectItem>();
+		itens.add(new SelectItem(null, "Selecione"));
+		for(Cliente cliente : clienteBO.getClientesAtivos()){
+			itens.add(new SelectItem(cliente, cliente.getNome()));
+		}
+		return itens;
+	}
 
 	
 	
 
 	public void limpaBean(){
 		usuario = new Usuario();
+		listaUsuarios = new ArrayList<Usuario>();
 	}
 
 	
@@ -483,6 +505,32 @@ public class UsuarioBean implements Serializable {
 	public void setFuncionarioBO(FuncionarioBO funcionarioBO) {
 		this.funcionarioBO = funcionarioBO;
 	}
+
+	public boolean isDtRender() {
+		return dtRender;
+	}
+
+	public void setDtRender(boolean dtRender) {
+		this.dtRender = dtRender;
+	}
+
+	public ClienteBO getClienteBO() {
+		return clienteBO;
+	}
+
+	public void setClienteBO(ClienteBO clienteBO) {
+		this.clienteBO = clienteBO;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	
 	
 	
 }

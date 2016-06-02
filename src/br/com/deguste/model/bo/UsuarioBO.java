@@ -48,8 +48,8 @@ public class UsuarioBO extends GenericHibernateDAO<Usuario> implements UsuarioBu
 	public void existeLogin(Usuario user) throws Exception{
 		try{
 			Query queryUsuarios = em.createQuery("SELECT u FROM Usuario u WHERE "
-							+ "LOWER(u.login) LIKE LOWER(:login) AND u.ativo =:ativo");
-			queryUsuarios.setParameter("login", "%" + user.getLogin() + "%");
+							+ "LOWER(u.login) = LOWER(:login) AND u.ativo =:ativo");
+			queryUsuarios.setParameter("login", user.getLogin());
 			queryUsuarios.setParameter("ativo", true);
 			Number usuarios = (Number) queryUsuarios.getSingleResult();
 			
@@ -105,15 +105,15 @@ public class UsuarioBO extends GenericHibernateDAO<Usuario> implements UsuarioBu
 	@Override
 	public List<Usuario> procurarUsuario(Usuario usuario){
 		Map<String, Object> parametros = new HashMap<String, Object>();
-		StringBuilder query = new StringBuilder("SELECT u FROM Usuario u WHERE 1=1 AND u.ativo =:ativo");
+		StringBuilder query = new StringBuilder("SELECT u FROM Usuario u WHERE  u.ativo =:ativo");
 		
 		if(usuario.getNome() != null && !usuario.getNome().isEmpty()){
 			query.append(" AND LOWER(u.nome) LIKE LOWER(:nome)");
 			parametros.put("nome", "%"+usuario.getNome()+"%");
 		}
 			if(usuario.getLogin() != null && !usuario.getLogin().isEmpty()){
-				query.append(" AND u.login =:login");
-				parametros.put("login", usuario.getLogin());
+				query.append(" AND LOWER(u.login) LIKE LOWER(:login)");
+				parametros.put("login", usuario.getLogin()+"%");
 				
 			}
 			

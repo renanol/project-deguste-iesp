@@ -51,7 +51,7 @@ public abstract class GenericHibernateDAO<T> implements IGenericDAO<T>{
 	}
 
 	@Override
-	public List<T> selectAll(){
+	public List<T> selectFornecedores(){
 		this.openSession();
 		Criteria criteria = session.createCriteria(persistentClass);
 		List<T> result = null;

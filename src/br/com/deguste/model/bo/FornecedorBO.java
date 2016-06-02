@@ -42,8 +42,7 @@ public class FornecedorBO extends GenericHibernateDAO<Fornecedor> implements For
 	public void verificaFornecedor(Fornecedor fornecedor) throws Exception{
 		try{
 			Query queryFornecedores = em.createQuery("SELECT f FROM Fornecedor f WHERE "
-							+ "LOWER(f.nome) LIKE LOWER(:nome) AND f.ativo =:ativo AND f.cnpj =:cnpj");
-			queryFornecedores.setParameter("nome", "%" + fornecedor.getNome() + "%");
+							+ "f.ativo =:ativo AND f.cnpj =:cnpj");
 			queryFornecedores.setParameter("ativo", true);
 			queryFornecedores.setParameter("cnpj", fornecedor.getCnpj());
 			Number fornecedores = (Number) queryFornecedores.getSingleResult();
@@ -55,7 +54,7 @@ public class FornecedorBO extends GenericHibernateDAO<Fornecedor> implements For
 			return;
 		} catch (Exception e) {
 			throw new Exception(
-					"Esse fornecedor já foi cadastrado");
+					"Esse fornecedor jï¿½ foi cadastrado");
 		}
 	}
 	
@@ -95,7 +94,7 @@ public class FornecedorBO extends GenericHibernateDAO<Fornecedor> implements For
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Fornecedor> selectAll() {
-		return super.em.createQuery("SELECT f FROM Fornecedor f").getResultList();
+	public List<Fornecedor> selectFornecedores() {
+		return super.em.createQuery("SELECT f FROM Fornecedor f where f.ativo = true  ").getResultList();
 	}
 }

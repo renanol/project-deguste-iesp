@@ -18,6 +18,7 @@ import org.primefaces.event.SelectEvent;
 import br.com.deguste.model.bo.EnderecoBO;
 import br.com.deguste.model.bo.FornecedorBO;
 import br.com.deguste.model.entity.Fornecedor;
+import br.com.deguste.model.entity.Usuario;
 import br.com.deguste.model.pojos.EnderecoResponse;
 @Named
 @ViewScoped
@@ -42,6 +43,7 @@ public class FornecedorBean implements Serializable {
 	//Rendereds da pagina
 	
 	private boolean statusRegister;
+	private boolean dtRender;
 	private boolean cadastroRendered;
 	private boolean pesquisaRendered;
 	private boolean botaoFecharRendered; 
@@ -68,15 +70,12 @@ public class FornecedorBean implements Serializable {
 		if(fornecedor == null){
 			fornecedor = new Fornecedor();
 		}
-		
-		this.procurarFornecedor();
-		
-		
 	}
 	
 	public void acaoPesquisar(){
 		this.limpaBean();
 		this.alterStatusRendered();
+		this.dtRender = false;
 	}
 	
 	public void alterStatusRendered() {
@@ -97,20 +96,34 @@ public class FornecedorBean implements Serializable {
 		this.alterStatusRendered();
 	}
 	
+	public void desabilitafornecedor(Fornecedor fornecedor){
+		
+		try {
+			fornecedor.setAtivo(false);
+			fornecedorBO.salvar(fornecedor);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Fornecedor foi excluído", null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+		fornecedor = new Fornecedor();
+		this.listaFornecedores = fornecedorBO.consultaFornecedodor(fornecedor);
+		
+	}
 	
-	public void acaoAlterar() throws NoSuchFieldException, SecurityException,
-	InstantiationException, IllegalAccessException {
-if (this.fornecedor.getId() == null) {
-	FacesContext.getCurrentInstance().addMessage(null,
-			new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"O fornecedor não foi selecionado.", ""));
-} else {
-	this.setStatusRegister(false);
-	botaoApagarRendered = true;
-	setCadastroRendered(true);
-	setPesquisaRendered(false);
-}
-}
+	
+	public void acaoAlterar(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor; 
+		if (this.fornecedor.getId() != null) {
+			this.setStatusRegister(false);
+			botaoApagarRendered = true;
+			setCadastroRendered(true);
+			setPesquisaRendered(false);
+		}
+	}
+	
 	
 	public void selecionarObjetoEvent(SelectEvent event) {
 		this.fornecedor = (Fornecedor) event.getObject();
@@ -126,6 +139,7 @@ if (this.fornecedor.getId() == null) {
 	
 	public void procurarFornecedor() throws Exception{
 		this.listaFornecedores = fornecedorBO.consultaFornecedodor(fornecedor);
+		this.dtRender = true;
 	}
 	
 	public void obterEnderecoPorCep(){
@@ -251,6 +265,14 @@ if (this.fornecedor.getId() == null) {
 
 	public void setBotaoApagarRendered(boolean botaoApagarRendered) {
 		this.botaoApagarRendered = botaoApagarRendered;
+	}
+
+	public boolean isDtRender() {
+		return dtRender;
+	}
+
+	public void setDtRender(boolean dtRender) {
+		this.dtRender = dtRender;
 	}
 	
 	

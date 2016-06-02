@@ -10,7 +10,7 @@ public interface IGenericDAO<T> extends Serializable {
 
     T selectById(Long id);
 
-    List<T> selectAll();
+    List<T> selectFornecedores();
     
     List<T> selectWhere(Criterion ...criterions );
     

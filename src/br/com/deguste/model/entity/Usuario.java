@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,27 +46,21 @@ public class Usuario implements Serializable {
 	@Column(nullable=false)
 	private String nome;
 	
-	@Column(nullable=false)
-	private String sobrenome;
+	@ManyToOne
+	@JoinColumn(name = "FUNCIONARIO", referencedColumnName = "id")
+	private Funcionario funcionario;
+	
+	@ManyToOne
+	@JoinColumn(name = "CLIENTE", referencedColumnName = "id")
+	private Cliente cliente;
 	
 	@Column
-	private String cpf;
-	
-	
-	
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
 	private boolean primeiroAcesso;
 	
+	@Column
 	private boolean ativo;
 	
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if(obj == null) return false;
@@ -83,8 +79,12 @@ public class Usuario implements Serializable {
 	}
 	
 	
-	public Usuario() {
-	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -146,21 +146,22 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public String getSobrenome() {
-		return sobrenome;
+	public Funcionario getFuncionario() {
+		return funcionario;
 	}
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public Cliente getCliente() {
+		return cliente;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
+	
 
 	
 	

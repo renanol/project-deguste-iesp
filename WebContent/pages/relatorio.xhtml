@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/common.xhtml">
+	<ui:define name="body">
+		<h:form acceptcharset="ISO-8859-1" styleClass="formRelatorio">
+			<p:messages closable="true" autoUpdate="true" />
+
+			<fieldset>
+				<legend>Relatório </legend>
+				<div align="center">
+					<h:panelGrid columns="2" cellpadding="1" cellspacing="1">
+						<h:panelGrid style="margin:0 auto">
+							<p:outputLabel value="Mês:" />
+	
+						</h:panelGrid>
+						<h:panelGrid>
+							<p:outputLabel value="Ano:" />
+							<p:inputMask mask="9999"  style="width:60px"
+								value="#{relatoriosBean.ano}"
+								validatorMessage="Apenas números são aceitos no campo ano"
+								required="true" requiredMessage="O campo ano está inválido">
+							</p:inputMask>
+						</h:panelGrid>
+					</h:panelGrid>
+
+					<h:panelGrid columns="2" cellpadding="1" cellspacing="2">
+						<h:panelGrid>
+							<p:outputLabel value="teste:" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</div>
+				<p></p>
+				<h:panelGrid columns="2" cellpadding="5" cellspacing="1"
+					style="margin-left:13%">
+					<h:panelGrid>
+					
+					</h:panelGrid>
+				
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

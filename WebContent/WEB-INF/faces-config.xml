@@ -5,6 +5,11 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
 
+	<converter>
+		<converter-id>entityConverter</converter-id>
+		<converter-class>br.com.deguste.converters.EntityConverter</converter-class>
+	</converter>
+
 	<application>
 		<resource-bundle>
 			<base-name>resources.message</base-name>
